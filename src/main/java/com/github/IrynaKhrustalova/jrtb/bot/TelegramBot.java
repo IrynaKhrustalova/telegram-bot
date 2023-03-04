@@ -1,5 +1,8 @@
 package com.github.IrynaKhrustalova.jrtb.bot;
 
+import com.github.IrynaKhrustalova.jrtb.command.CommandContainer;
+import com.github.IrynaKhrustalova.jrtb.command.NoCommand;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -7,12 +10,21 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import static com.github.IrynaKhrustalova.jrtb.command.CommandName.NO;
+
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
+    public static String COMMAND_PREFIX = "/";
     @Value("${bot.username}")
     private String username;
     @Value("${bot.token}")
     private String token;
+    private final CommandContainer commandContainer;
+
+    public TelegramBot(CommandContainer commandContainer) {
+        this.commandContainer = commandContainer;
+    }
+
     @Override
     public String getBotUsername() {
         return username;
@@ -27,16 +39,11 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText().trim();
-            String chatId = update.getMessage().getChatId().toString();
-
-            SendMessage sendMessage = new SendMessage();
-            sendMessage.setChatId(chatId);
-            sendMessage.setText(message);
-
-            try {
-                execute(sendMessage);
-            } catch (TelegramApiException e) {
-                throw new RuntimeException("Something went wrong...");
+            if (message.startsWith(COMMAND_PREFIX)) {
+                String commandIdentifier = message.split(" ")[0].toLowerCase();
+                commandContainer.retrieveCommand(commandIdentifier).execute(update);
+            } else {
+                commandContainer.retrieveCommand(NO.getCommandName()).execute(update);
             }
         }
     }
