@@ -8,7 +8,7 @@
 		<version>2.7.9</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.github.IrynaKhrustalova</groupId>
+	<groupId>com.IrynaKhrustalova</groupId>
 	<artifactId>Telegram-Bot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Telegram-Bot</name>
