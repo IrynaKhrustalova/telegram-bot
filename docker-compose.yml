@@ -16,8 +16,8 @@ services:
     environment:
       MYSQL_USER: ${BOT_DB_USERNAME}
       MYSQL_PASSWORD: ${BOT_DB_PASSWORD}
-      MYSQL_DATABASE: 'jrtb_db'
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'dev_jrtb_db'
+      MYSQL_ROOT_PASSWORD: '220491Ira!'
     ports:
       - '3307:3307'
     expose:
