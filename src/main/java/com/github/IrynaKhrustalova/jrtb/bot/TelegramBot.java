@@ -2,6 +2,8 @@ package com.github.IrynaKhrustalova.jrtb.bot;
 
 import com.github.IrynaKhrustalova.jrtb.command.CommandContainer;
 import com.github.IrynaKhrustalova.jrtb.command.NoCommand;
+import com.github.IrynaKhrustalova.jrtb.service.SendBotMessageServiceImpl;
+import com.github.IrynaKhrustalova.jrtb.service.TelegramUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,8 +23,9 @@ public class TelegramBot extends TelegramLongPollingBot {
     private String token;
     private final CommandContainer commandContainer;
 
-    public TelegramBot(CommandContainer commandContainer) {
-        this.commandContainer = commandContainer;
+    @Autowired
+    public TelegramBot(TelegramUserService telegramUserService) {
+        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this), telegramUserService);
     }
 
     @Override
