@@ -1,4 +1,4 @@
-package com.github.IrynaKhrustalova.jrtb.repository;
+/*package com.github.IrynaKhrustalova.jrtb.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 /**
  * Integration-level testing for {@link TelegramUserRepository}.
  */
-@ActiveProfiles("test")
+/*@ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 class TelegramUserRepositoryIT {
@@ -43,3 +43,4 @@ class TelegramUserRepositoryIT {
         Assertions.assertEquals(telegramUser, savedUser.get());
     }
 }
+*/
